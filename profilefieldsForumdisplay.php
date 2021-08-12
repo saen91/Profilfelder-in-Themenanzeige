@@ -145,10 +145,7 @@ function profilefieldsForumdisplay_showFields() {
 		
 		$get_authorfields = $db->simple_select("userfields","*","ufid= {$author}");
 		$get_authorfields = $db->fetch_array($get_authorfields);
-		
-		$get_ugroup = $user['usergroup'];
-		$get_ugroup = $db->fetch_array($get_ugroup);
-		
+				
 //SCHÜLER
 		//VERTRAUENSSCHÜLER
 		if($get_authorfields['fid20']=="Ja") {
@@ -159,7 +156,7 @@ function profilefieldsForumdisplay_showFields() {
 		//QUIDDITCHKAPITÄN 
 		elseif ($get_authorfields['fid15']=="Ja") {
 			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . " | Quidditchkapitän:in </div>"  ;} 
-		elseif ($get_authorfields['fid27']) {
+		elseif ($get_authorfields['fid27'] != 'keine Auswahl' AND $get_authorfields['fid27'] != '') {
 			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . "</div>"  ;} 
 		
 //HOGWARTS!!!!!!!!!!!!!!!!!!!		
@@ -206,7 +203,10 @@ function profilefieldsForumdisplay_showFields() {
 		elseif ($get_authorfields['fid58']=="Ja" AND $fid=='815') {			
 				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']."  | Station: ". $get_authorfields['fid17']  ." | Abteilungsheiler:in</div>";}
 		//MITARBEITER  
-		elseif ($get_authorfields['fid17'] AND $get_ugroup['20']) {			
+		elseif ($get_authorfields['fid17'] AND $fid=='815') {	
+
+
+
 				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']."  | Station: ". $get_authorfields['fid17']." | ". $get_authorfields['fid12']  ."</div>";}
 	}
 	
