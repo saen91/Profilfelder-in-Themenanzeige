@@ -145,69 +145,52 @@ function profilefieldsForumdisplay_showFields() {
 		
 		$get_authorfields = $db->simple_select("userfields","*","ufid= {$author}");
 		$get_authorfields = $db->fetch_array($get_authorfields);
-				
+		
+		
+		//AB HIER MÜSST IHR SELBST ANPASSEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		
+		//HIER WIRD JETZT DAS GETEILTE FELD BLUTSTATUS UND ALTER ZUSAMMENGEFASST
+		//Hier verwende ich Profilfelder in einer Variable, die sich immer wieder ähneln 
+		$sharedfields = $get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ";
+		
+		//IN $get_authorfields['fidxx'] bei immer eure fid eingeben. 
+		
 //SCHÜLER
 		//VERTRAUENSSCHÜLER
 		if($get_authorfields['fid20']=="Ja") {
-			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . " | Vertrauensschüler:in </div>"  ;}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid27'] . " | Vertrauensschüler:in </div>"  ;}
 		//SCHULSPRECHER 
 		elseif ($get_authorfields['fid22']=="Ja") {
-			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . " | Schulsprecher:in </div>"  ;} 
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid27'] . " | Schulsprecher:in </div>"  ;} 
 		//QUIDDITCHKAPITÄN 
 		elseif ($get_authorfields['fid15']=="Ja") {
-			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . " | Quidditchkapitän:in </div>"  ;} 
-		elseif ($get_authorfields['fid27'] != 'keine Auswahl' AND $get_authorfields['fid27'] != '') {
-			$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid27'] . "</div>"  ;} 
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid27'] . " | Quidditchkapitän:in </div>"  ;} 
 		
-//HOGWARTS!!!!!!!!!!!!!!!!!!!		
+		//SCHÜLER && ALLE AUSSCHLIESSEN (FÜR DIE NÄCHSTEN ABSÄTZE) DIE IM JAHRGANG KEINE AUSWAHL ODER NICHTS DRINNE HABEN
+		elseif ($get_authorfields['fid27'] != 'keine Auswahl' AND $get_authorfields['fid27'] != '') {
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid27'] . "</div>"  ;} 
+		
+		//HOGWARTS!!!!!!!!!!!!!!!!!!!		
 		//SCHULLEITUNG
 		elseif ($get_authorfields['fid28']== "Schulleiter" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." |  ". $get_authorfields['fid28']  ."</div>";}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid28']  ."</div>";}
 		//STELLV. SCHULLEITUNG
 		elseif ($get_authorfields['fid28']== "Stellvertretender Schulleiter" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." |  ". $get_authorfields['fid28']  ."</div>";}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid28']  ."</div>";}
 		//HAUSLEHRER 
 		elseif ($get_authorfields['fid24']== "Gryffindor" OR $get_authorfields['fid24']== "Ravenclaw" OR $get_authorfields['fid24']== "Slytherin" OR $get_authorfields['fid24']== "Hufflepuff" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | Professor:in | Fach: ". $get_authorfields['fid11']  ." | Hauslehrer:in  ". $get_authorfields['fid24']  ." </div>";}	
+			$charfield = "<div class=\"cdetails\">".$sharedfields. " Professor:in | Fach: ". $get_authorfields['fid11']  ." | Hauslehrer:in  ". $get_authorfields['fid24']  ." </div>";}	
    		//LEHRERREF
 		elseif ($get_authorfields['fid46']== "Ja" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." |  Referendar:in | Fach: ". $get_authorfields['fid11']  ."</div>";}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. " Referendar:in | Fach: ". $get_authorfields['fid11']  ."</div>";}
 		//LEHRER
 		elseif ($get_authorfields['fid46']== "Nein" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | Professor:in |  Fach: ". $get_authorfields['fid11']  ."</div>";}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. " Professor:in |  Fach: ". $get_authorfields['fid11']  ."</div>";}
 		//SONSTIGE
 		elseif ($get_authorfields['fid47']== "Ja" AND $fid=='26') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid35']  ."</div>";}
-				
-//SEVEN OAKS
-		//STUDENTEN
-		elseif ($get_authorfields['fid38'] AND $fid=='281') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | STUDIENFACH: ". $get_authorfields['fid38']  ."</div>";}
-		//MITARBEITER
-		elseif ($get_authorfields['fid40']=="Seven Oaks" AND $fid=='281') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid12']  ."</div>";}
-
-//MINISTERIUM
-		//ABTEILUNGSLEITER
-		elseif ($get_authorfields['fid14']=="Ja" AND $fid=='578') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid9']  ." | Abteilungsleiter:in</div>";}
-		//ASSISTENZ
-		elseif ($get_authorfields['fid57']=="Ja" AND $fid=='578') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid9']  ." | Assistent:in</div>";}
-		//MITARBEITER
-		elseif ($get_authorfields['fid48'] AND $fid=='578') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']." | ". $get_authorfields['fid9']." | ". $get_authorfields['fid12']  ."</div>";}
-				
-//MUNGOS
-		//ABTEILUNGSHEILER
-		elseif ($get_authorfields['fid58']=="Ja" AND $fid=='815') {			
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']."  | Station: ". $get_authorfields['fid17']  ." | Abteilungsheiler:in</div>";}
-		//MITARBEITER  
-		elseif ($get_authorfields['fid17'] AND $fid=='815') {	
-
-
-
-				$charfield = "<div class=\"cdetails\">".$get_authorfields['fid43']." Jahre | ". $get_authorfields['fid5']."  | Station: ". $get_authorfields['fid17']." | ". $get_authorfields['fid12']  ."</div>";}
+			$charfield = "<div class=\"cdetails\">".$sharedfields. $get_authorfields['fid35']  ."</div>";}
+		
 	}
 	
 }
